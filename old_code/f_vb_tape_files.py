@@ -36,7 +36,7 @@ def vb_tape_files(file_list, start_time_seconds, end_time_seconds, export_choice
     return processed_dfs
 
 # # Testing:
-# os.chdir("/Users/robertnoble/Library/CloudStorage/OneDrive-UniversityofBristol/EWDS/EWPY/Assessment/DataSet01")
+# os.chdir("path/to/data")  # Set your working directory here
 # file_list = ['UoB_Set01_2024-04-02tapes.csv']
 # start_time_seconds = 10800.0
 # end_time_seconds = 10805.0

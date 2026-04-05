@@ -8,7 +8,7 @@ The analysis processes 6 months of intraday market activity using Python, coveri
 
 ```
 ├── analysis/             # Source code
-│   ├── EwPY2473787.ipynb # Master Jupyter notebook
+│   ├── analysis.ipynb # Master Jupyter notebook
 │   ├── t1_*.py           # Task 1: Data extraction & summarisation
 │   ├── t2_*.py           # Task 2: Market depth visualisation
 │   └── t3_*.py           # Task 3: Block order detection & analysis
@@ -63,7 +63,7 @@ Data files are not included in this repository (~800 MB across ~250 CSV files). 
 pip install pandas numpy regex matplotlib statsmodels patsy
 ```
 
-Open `analysis/EwPY2473787.ipynb` in Jupyter and run the cells in order.
+Open `analysis/analysis.ipynb` in Jupyter and run the cells in order.
 
 ## Dependencies
 

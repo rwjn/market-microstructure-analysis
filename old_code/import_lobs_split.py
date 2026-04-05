@@ -27,7 +27,7 @@ def process_lob_files(header_string, file_list, start_time_seconds, end_time_sec
             print(f'FAIL: file with extension={extension} can\'t be handled')
     return pd.DataFrame(data, columns=['time', 'lob'])
 
-os.chdir("/Users/robertnoble/Library/CloudStorage/OneDrive-UniversityofBristol/EWDS/EWPY/Assessment/DataSet01")
+# os.chdir("path/to/data")  # Set your working directory here
 
 file_list_ = ['UoB_Set01_2024-01-02LOBs.csv']
 start_time_seconds = 0
