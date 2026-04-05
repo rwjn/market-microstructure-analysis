@@ -1,0 +1,18 @@
+# Large data files
+DataSet01/
+DataSet01.zip
+EWPY2473787.zip
+
+# Personal documents
+feedback.docx
+
+# Outputs directory (keep structure, not contents)
+Outputs/*
+!Outputs/.gitkeep
+
+# System files
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
