@@ -29,13 +29,21 @@ The analysis processes 6 months of intraday market activity using Python, coveri
   - **Mid price**: `(best_bid + best_ask) / 2`
   - **Micro price**: volume-weighted price using best bid/ask quantities
 
-### Task 3 — Block Order Detection
-- Identifies block orders meeting all of:
-  - Both sides of the book have quantity > 1
-  - One side is at least 10× the counterparty quantity
-  - The order is larger than the previous order on the same side
-- Calculates pre/post-block spread, mid price, micro price, and counterparty response time
-- Visualises block order impact on price discovery
+### Task 3 — Block Order Detection & Market Impact Analysis
+
+**Block order identification** follows Church & Cliff (2019): an order qualifies as a block if both sides of the book have quantity > 1, one side is at least 10× the counterparty quantity, and the order is larger than the previous order on the same side. The relative rather than absolute size criterion reflects that market impact depends on order size relative to available liquidity, not raw quantity.
+
+**Market impact timing** uses the divergence between mid price `(best_bid + best_ask) / 2` and micro price (quantity-weighted best bid/ask) to define the impact window. A block order creates a quantity imbalance that pulls the micro price away from the mid price; the window closes when the mid/micro spread returns to its pre-block level, avoiding an arbitrary fixed time horizon.
+
+**Regression analysis** estimates the relationship between block order size and the magnitude of subsequent price changes:
+- **OLS** — baseline model with standard and clustered (by day) standard errors. Block order size is significant at the 99% level; a one-unit increase in quantity is associated with a 0.30 increase in subsequent price change
+- **Log-log OLS** — a 1% increase in block size leads to a ~1.7% increase in price change magnitude, suggesting an elastic response
+- **Extended OLS** — adding LOB liquidity (best bid/ask spread, following Schroeter 2014) and time-to-equilibrium improves R² to 0.176; both variables significant at the 99% level
+- **Quantile regression** — addresses non-normal residuals; reveals the block size–price impact relationship varies significantly across the distribution, with coefficients and R² differing notably across quantiles
+
+**Robustness checks**: White test (homoskedastic — robust SE not required), Durbin-Watson test (no significant autocorrelation), Jarque-Bera test (non-normal residuals across all models — motivating the quantile regression approach). Clustered standard errors increase slightly from 0.025 to 0.035 but leave coefficients and significance unchanged.
+
+**Key finding**: block order size is a statistically significant predictor of price impact, but explanatory power remains low (adjusted R² ~0.03–0.18), consistent with Abergel et al. (2015) who find LOB regression coefficients are unstable over time. The causal interpretation is limited without information on trader behaviour.
 
 ## Data
 
@@ -55,7 +63,7 @@ Data files are not included in this repository (~800 MB across ~250 CSV files). 
 pip install pandas numpy regex matplotlib statsmodels patsy
 ```
 
-Open `EWPY2473787/EwPY2473787.ipynb` in Jupyter and run the cells in order.
+Open `analysis/EwPY2473787.ipynb` in Jupyter and run the cells in order.
 
 ## Dependencies
 
